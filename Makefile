@@ -1,6 +1,6 @@
 SDCC ?= sdcc
-STCCODESIZE ?= 8000
-SDCCOPTS ?= --iram-size 256 --code-size $(STCCODESIZE) --data-loc 0x30 --disable-warning 158
+STCCODESIZE ?= 4089
+SDCCOPTS ?= --iram-size 256 --code-size $(STCCODESIZE) --xram-size 0 --data-loc 0x30 --disable-warning 158
 SRC = src/adc.c src/ds1302.c src/timer.c src/display.c src/utility.c src/serial.c src/sound.c
 OBJ=$(patsubst src%.c,build%.rel, $(SRC))
 

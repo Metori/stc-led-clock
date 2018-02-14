@@ -21,7 +21,11 @@
 // This is all done to save code space.
 // Ugly but seemingly necessary.
 
+#if OPT_RUSSIAN_UI
+#include "codeTablesRus.c"
+#else
 #include "codeTables.c"
+#endif
 
 // These are global to this module.
 // Not a great practice but when you've only got
@@ -248,7 +252,11 @@ void displayFSM()
 // scSet,scBeep,scDsp,scCfg
 
     case scSet:
+#if OPT_RUSSIAN_UI
+        setText2(txSet);
+#else
         setText4(txSet);
+#endif
         stateSwitchWithS1(scBeep);
         stateSwitchWithS2(msClock);
         break;
@@ -278,6 +286,12 @@ void displayFSM()
         stateSwitchWithS1(msExit);
 #if OPT_UNITS_GROUP
         stateSwitchWithS2(msSetUnits);
+#elif OPT_TIME_FORMAT_SELECTABLE
+        stateSwitchWithS2(msFormatTime);
+#elif OPT_TEMP_UNITS_SELECTABLE
+        stateSwitchWithS2(msTempUnits);
+#elif OPT_DATE_FORMAT_SELECTABLE
+        stateSwitchWithS2(msFormatDate);
 #else
         stateSwitchWithS2(msFormatTime);
 #endif
@@ -365,7 +379,11 @@ void displayFSM()
 // msChime,msChimeStartHour,msChimeStopHour
 
     case msChime:
+#if OPT_RUSSIAN_UI
+        setText4(txChime);
+#else
         setText2(txChime);
+#endif
 #if OPT_DATE_DSP
         stateSwitchWithS1(msDate);
 #elif OPT_DAY_DSP
@@ -599,46 +617,79 @@ void displayFSM()
         stateSwitchWithS2(msEU);
         break;
 #else
+  #if OPT_TIME_FORMAT_SELECTABLE
     case msFormatTime:
         setText4(tx1224);
+    #if OPT_TEMP_UNITS_SELECTABLE
         stateSwitchWithS1(msTempUnits);
+    #elif OPT_DATE_FORMAT_SELECTABLE
+        stateSwitchWithS1(msFormatDate);
+    #else
+        stateSwitchWithS1(msBrightness);
+    #endif
         stateSwitchExtendedWithS2(ms12,NoText2,Select_12);
         break;
 
     case ms12:
         setText2A(tx12);
         changeTimeFormat(TRUE);
+    #if OPT_TEMP_UNITS_SELECTABLE
         stateSwitchWithS1(msTempUnits);
+    #elif OPT_DATE_FORMAT_SELECTABLE
+        stateSwitchWithS1(msFormatDate);
+    #else
+        stateSwitchWithS1(msBrightness);
+    #endif
         stateSwitchWithS2(ms24);
         break;
 
     case ms24:
         setText2A(tx24);
         changeTimeFormat(FALSE);
+    #if OPT_TEMP_UNITS_SELECTABLE
         stateSwitchWithS1(msTempUnits);
+    #elif OPT_DATE_FORMAT_SELECTABLE
+        stateSwitchWithS1(msFormatDate);
+    #else
+        stateSwitchWithS1(msBrightness);
+    #endif
         stateSwitchWithS2(ms12);
         break;
-
+  #endif
+  #if OPT_TEMP_UNITS_SELECTABLE
     case msTempUnits:
         setText4(txTemp4);
+    #if OPT_DATE_FORMAT_SELECTABLE
         stateSwitchWithS1(msFormatDate);
+    #else
+        stateSwitchWithS1(msBrightness);
+    #endif
         stateSwitchExtendedWithS2(msF,NoText2,Select_FC);
         break;
 
     case msF:
         setText2A(txF);
         Select_FC = TRUE;
+    #if OPT_DATE_FORMAT_SELECTABLE
         stateSwitchWithS1(msFormatDate);
+    #else
+        stateSwitchWithS1(msBrightness);
+    #endif
         stateSwitchWithS2(msC);
         break;
 
     case msC:
         setText2A(txC);
         Select_FC = FALSE;
+    #if OPT_DATE_FORMAT_SELECTABLE
         stateSwitchWithS1(msFormatDate);
+    #else
+        stateSwitchWithS1(msBrightness);
+    #endif
         stateSwitchWithS2(msF);
         break;
-
+  #endif
+  #if OPT_DATE_FORMAT_SELECTABLE
     case msFormatDate:
         setText4(txDate4);
         stateSwitchWithS1(msBrightness);
@@ -658,6 +709,7 @@ void displayFSM()
         stateSwitchWithS1(msBrightness);
         stateSwitchWithS2(ms1231);
         break;
+  #endif
 #endif
     case msBrightness:
         setText4(txBrt);
@@ -790,23 +842,31 @@ void setText2A(uint8_t index)
 
 void setMsgOn()
 {
-#if DIGIT_3_FLIP
+#if OPT_RUSSIAN_UI
+    segs[M01] = 0xF9; // 1
+#else
+  #if DIGIT_3_FLIP
     segs[M10] = 0x9C; // o
     segs[M01] = 0xAB; // n
-#else
+  #else
     segs[M10] = 0XA3; // o
     segs[M01] = 0xAB; // n
+  #endif
 #endif
 }
 
 void setMsgOff()
 {
-#if DIGIT_3_FLIP
+#if OPT_RUSSIAN_UI
+    segs[M01] = 0xC0; // 0
+#else
+  #if DIGIT_3_FLIP
     segs[M10] = 0XC0; // o
     segs[M01] = 0x8E; // F
-#else
+  #else
     segs[M10] = 0xC0; // o
     segs[M01] = 0x8E; // F
+  #endif
 #endif
 }
 

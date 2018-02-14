@@ -24,22 +24,23 @@
 #define BOARD_BLUE_6       FALSE
 #define BOARD_BLUE_5_RELAY FALSE
 #define BOARD_YELLOW_5     FALSE
-#define BOARD_YELLOW_SMALL TRUE
+#define BOARD_YELLOW_SMALL FALSE
 #define BOARD_WHITE_SMALL  FALSE
 #define BOARD_GREEN_SMALL  FALSE
+#define BOARD_METORI       TRUE
 
-#define COMMON_ANODE   FALSE
-#define COMMON_CATHODE TRUE
+#define COMMON_ANODE   TRUE
+#define COMMON_CATHODE FALSE
 
-#define PROC_IS_15W408AS TRUE
+#define PROC_IS_15W408AS FALSE
 #define PROC_IS_15W404AS FALSE
-#define PROC_IS_15F204EA FALSE
+#define PROC_IS_15F204EA TRUE
 
 #define HAS_LDR TRUE
 #define HAS_THERMISTOR TRUE
 #define HAS_RELAY FALSE
 
-#define DIGIT_3_FLIP FALSE
+#define DIGIT_3_FLIP TRUE
 
 // When setting TEST_DEFAULTS to TRUE,
 // ensure that all display options are TRUE as well
@@ -58,24 +59,28 @@
 // Begin Software Option configuration
 //---------------------------------------------------------------------------
 
-#define OPT_ALARM       TRUE    // TRUE to implement
-#define OPT_CHIME       TRUE    // FALSE removes
-#define OPT_TEMP_DSP    TRUE
-#define OPT_DATE_DSP    TRUE
-#define OPT_DAY_DSP     TRUE
-#define OPT_UNITS_GROUP FALSE    // use 12/F/MD or 24/C/DM groups
+#define OPT_ALARM                  TRUE    // TRUE to implement
+#define OPT_CHIME                  TRUE    // FALSE removes
+#define OPT_TEMP_DSP               TRUE
+#define OPT_DATE_DSP               TRUE
+#define OPT_DAY_DSP                TRUE
+#define OPT_UNITS_GROUP            FALSE    // use 12/F/MD or 24/C/DM groups
+#define OPT_TIME_FORMAT_SELECTABLE TRUE
+#define OPT_TEMP_UNITS_SELECTABLE  FALSE
+#define OPT_DATE_FORMAT_SELECTABLE FALSE
+#define OPT_RUSSIAN_UI             TRUE
 
 // Set the default units for the clock
 // Use only one each of these groups of two
 
-#define SET_12HR_FORMAT TRUE
-#define SET_24HR_FORMAT FALSE
+#define SET_12HR_FORMAT FALSE
+#define SET_24HR_FORMAT TRUE
 
-#define SET_MMDD_FORMAT TRUE
-#define SET_DDMM_FORMAT FALSE
+#define SET_MMDD_FORMAT FALSE
+#define SET_DDMM_FORMAT TRUE
 
-#define SET_DEGF_FORMAT TRUE
-#define SET_DEGC_FORMAT FALSE
+#define SET_DEGF_FORMAT FALSE
+#define SET_DEGC_FORMAT TRUE
 
 //---------------------------------------------------------------------------
 // End Software Option configuration
@@ -433,6 +438,51 @@
 #endif
 
 #endif  // endif board_green_small
+
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+
+#if BOARD_METORI
+#define DP1_IS_COLON FALSE
+
+// Pushbutton port pins
+
+#define S2 P3_0                     // push button input pin aliases
+#define S1 P3_1
+
+// DS1302 pin to port mapping
+
+#define CE_HI P0_0 = 1;             // pin 5
+#define CE_LO P0_0 = 0;
+#define IO   P0_1                   // pin 6
+#define SCLK P3_2                   // pin 7
+
+// adc channels for sensors
+#if HAS_LDR
+#define ADC_LDR   6
+#define SET_LDR_PORT  P1M1 |= (1 << ADC_LDR); P1M0 |= (1 << ADC_LDR);
+#endif
+
+#if HAS_THERMISTOR
+#define ADC_TEMP  3
+#define SET_THERMISTOR_PORT P1M1 |= (1 << ADC_TEMP); P1M0 |= (1 << ADC_TEMP);
+#endif
+
+// buzzer port pins and active state set
+
+#define BZR_ON  P3_3 = 0            // direct port assigments
+#define BZR_OFF P3_3 = 1            // with logic
+
+#if COMMON_ANODE
+#define SET_PORT_DRIVE   P3M0 = 0xF0;
+#define LED_SET_ANODES   P3 &= ~(0b00010000 << aPos)
+#define LED_RESET_ANODES P3 |= 0b11110000
+#define LED_SET_CATHODES P2 = CathodeBuf[aPos]  // seg A = P.0 assumed
+#elif COMMON_CATHODE
+#error Common cathode not implemented for this board
+#endif
+
+#endif  // endif board_metori
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------

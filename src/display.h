@@ -48,9 +48,15 @@ enum stateTable {
 #if OPT_UNITS_GROUP
         msSetUnits,msEU,msUS,
 #else
+  #if OPT_TIME_FORMAT_SELECTABLE
         msFormatTime,ms24,ms12,
+  #endif
+  #if OPT_TEMP_UNITS_SELECTABLE
         msTempUnits,msC,msF,
+  #endif
+  #if OPT_DATE_FORMAT_SELECTABLE
         msFormatDate,ms3112,ms1231,
+  #endif
 #endif
         msBrightness,msBrtMax,msBrtMin,
 #if OPT_TEMP_DSP
@@ -63,7 +69,9 @@ enum stateTable {
 enum text2Entry {
     txClock,
     txAlarm,
+#if !OPT_RUSSIAN_UI
     txChime,
+#endif
 #if OPT_DATE_DSP
     txDate,
 #endif
@@ -77,17 +85,26 @@ enum text2Entry {
     txUS,
     txEU,
 #else
+  #if OPT_TIME_FORMAT_SELECTABLE
     tx12,
     tx24,
+  #endif
+  #if OPT_TEMP_UNITS_SELECTABLE
     txF,
     txC,
+  #endif
+#endif
+#if OPT_RUSSIAN_UI
+    txSet,
 #endif
     NoText2
     };
 
 enum text4Entry {
 // set stuff
+#if !OPT_RUSSIAN_UI
     txSet,
+#endif
     txBeep,
     txDsp,
     txCfg,
@@ -95,14 +112,25 @@ enum text4Entry {
 #if OPT_UNITS_GROUP
     txUnit,
 #else
+  #if OPT_TIME_FORMAT_SELECTABLE
     tx1224,
+  #endif
+  #if OPT_DATE_FORMAT_SELECTABLE
     tx1231,
     tx3112,
+  #endif
 #endif
     txBrt,
     txCal,
+  #if OPT_DATE_FORMAT_SELECTABLE
     txDate4,
+  #endif
+  #if OPT_TEMP_UNITS_SELECTABLE
     txTemp4,
+  #endif
+#if OPT_RUSSIAN_UI
+    txChime
+#endif
     };
 
 enum led_position { H10,H01,M10,M01 };
