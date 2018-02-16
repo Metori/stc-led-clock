@@ -487,14 +487,22 @@ void displayFSM()
     case msAlarmOff:
         setMsgOff();
         AlarmOn = FALSE;
+#if OPT_RUSSIAN_UI
+        stateSwitchExtendedWithS1Text4(msChimeOn,txChime,ChimeOn);
+#else
         stateSwitchExtendedWithS1(msChimeOn,txChime,ChimeOn);
+#endif
         stateSwitchWithS2(msAlarmOn);
         break;
 
     case msAlarmOn:
         setMsgOn();
         AlarmOn = TRUE;
+#if OPT_RUSSIAN_UI
+        stateSwitchExtendedWithS1Text4(msChimeOn,txChime,ChimeOn);
+#else
         stateSwitchExtendedWithS1(msChimeOn,txChime,ChimeOn);
+#endif
         stateSwitchWithS2(msAlarmOff);
         break;
 

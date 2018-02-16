@@ -2,7 +2,7 @@
 const uint8_t textDesc2[]= {
 #if DIGIT_3_FLIP
     0x99,0x88,  // ЧА txClock
-    0x90,0x91,  // БУ txAlarm
+    0x82,0x91,  // БУ txAlarm
   #if OPT_DATE_DSP
     0x99,0xC6,  // ЧС txDate
   #endif
@@ -14,7 +14,7 @@ const uint8_t textDesc2[]= {
   #endif
     #if OPT_UNITS_GROUP
         0xC8,0x92,  // US
-        0xB0,0xC1   // EU
+        0xB0,0xC1,  // EU
     #else
       #if OPT_TIME_FORMAT_SELECTABLE
         0xCF,0xA4,  // 12
@@ -22,13 +22,13 @@ const uint8_t textDesc2[]= {
       #endif
       #if OPT_TEMP_UNITS_SELECTABLE
         0xFF,0x8E,  // F
-        0xFF,0xC6   // C
+        0xFF,0xC6,  // C
       #endif
     #endif
     0x91,0xC6,  // УС
 #else
     0x99,0x88,  // ЧА txClock
-    0x90,0x91,  // БУ txAlarm
+    0x82,0x91,  // БУ txAlarm
   #if OPT_DATE_DSP
     0x99,0xC6,  // ЧС txDate
   #endif
@@ -40,7 +40,7 @@ const uint8_t textDesc2[]= {
  #endif
     #if OPT_UNITS_GROUP
         0xC1,0x92,  // US
-        0x86,0xC1   // EU
+        0x86,0xC1,  // EU
     #else
       #if OPT_TIME_FORMAT_SELECTABLE
         0xF9,0xA4,  // 12
@@ -48,7 +48,7 @@ const uint8_t textDesc2[]= {
       #endif
       #if OPT_TEMP_UNITS_SELECTABLE
         0xFF,0x8E,  // F
-        0xFF,0xC6   // C
+        0xFF,0xC6,  // C
       #endif
     #endif
     0x91,0xC6,  // УС
@@ -58,7 +58,7 @@ const uint8_t textDesc2[]= {
 const uint8_t textDesc4[]= {
 #if DIGIT_3_FLIP
     0xC6,0xCE,0x89,0xFF,    // СГН
-    0x86,0xBF,0x89,0xFF,    // Э-Н
+    0xB0,0xBF,0x89,0xFF,    // Э-Н
     0xC8,0x88,0xA1,0xFF,    // ПАР
     #if OPT_UNITS_GROUP
         0xC1,0xAB,0xFD,0x87,    // Unit
@@ -79,11 +79,11 @@ const uint8_t textDesc4[]= {
   #if OPT_TEMP_UNITS_SELECTABLE
     0x87,0x86,0xC9,0x8C,    // TEMP
   #endif
-    0x19,0xC6,0xF0,0xFF,    //Ч.СГ txChime
+    0x19,0xC6,0xF1,0xFF,    //Ч.СГ txChime
 
 #else
     0xC6,0xCE,0x89,0xFF,    // СГН
-    0x86,0xBF,0x89,0xFF,    // Э-Н
+    0xB0,0xBF,0x89,0xFF,    // Э-Н
     0xC8,0x88,0x8C,0xFF,    // ПАР
     #if OPT_UNITS_GROUP
         0xC1,0xAB,0xEF,0x87,    // Unit

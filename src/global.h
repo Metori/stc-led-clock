@@ -47,7 +47,7 @@
 // OPT_TEMP_DSP OPT_DATE_DSP OPT_DAY_DSP
 // All three must be set to TRUE otherwise some code will fail
 // Just ensure that any mode bit that is ON has
-// has corresponding logic enabled in codeto support it.
+// has corresponding logic enabled in code to support it.
 
 #define TEST_DEFAULTS FALSE
 

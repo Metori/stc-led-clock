@@ -225,6 +225,20 @@ void stateSwitchExtendedWithS1(uint8_t newState, uint8_t text2, __bit flag)
     }
 }
 
+#if OPT_RUSSIAN_UI
+void stateSwitchExtendedWithS1Text4(uint8_t newState, uint8_t text4, __bit flag)
+{
+    if (pressedS1){
+        pressedS1 = FALSE;
+        displayState = newState;
+        // if the flag is off, goto OFF state (-1)
+        if (!flag)
+            displayState--;
+        setText4(text4);
+    }
+}
+#endif
+
 // Check if S2 pressed. Set new state if true.
 
 void stateSwitchWithS2(uint8_t newState)

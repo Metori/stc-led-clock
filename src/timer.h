@@ -17,6 +17,11 @@ void delay3(uint8_t ticks);
 
 void stateSwitchWithS1(uint8_t);
 void stateSwitchExtendedWithS1(uint8_t,uint8_t,__bit);
+
+#if OPT_RUSSIAN_UI
+void stateSwitchExtendedWithS1Text4(uint8_t,uint8_t,__bit);
+#endif
+
 void stateSwitchWithS2(uint8_t);
 void stateSwitchExtendedWithS2(uint8_t,uint8_t,__bit);
 
