@@ -33,9 +33,14 @@ int main()
 #endif
     // setup 20ma source for direct drive clocks
     SET_PORT_DRIVE;
-    // set photoresistor & ntc pins to open-drain output
+#if HAS_LDR
+    // set photoresistor pins to open-drain output
     SET_LDR_PORT;
+#endif
+#if HAS_THERMISTOR
+    // set ntc pins to open-drain output
     SET_THERMISTOR_PORT;
+#endif
     // done setup of ports
     blankDisplay();         // turn everything off for startup
     initRtc();              // setup DS1302 and read config ram
