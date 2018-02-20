@@ -1,7 +1,5 @@
 # Firmware replacement for Chinese STC based processor DIY Clock kits
 
-[![Join the chat at https://gitter.im/stc-clock/Lobby](https://badges.gitter.im/stc-clock/Lobby.svg)](https://gitter.im/stc-clock/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 This is a replacement program for the STC 8051 core uP based DIY digital clock kits available from numerous Chinese sources. The specific clock used to develop this firmware was purchased from [Banggood](http://www.banggood.com/DIY-4-Digit-LED-Electronic-Clock-Kit-Temperature-Light-Control-Version-p-972289.html) but was constructed with a code base that should be (easily?) modified with future forks to support most of the four digit clocks that are based on the STC controllers.
 
 03-April-17 This firmware now supports the "talking clock" sold by Banggood and others that uses the NY3P065 sound chip in both 24 and 12 hour modes. Also supported are the 0.8 inch single LED clocks with both LDR dimming and temperature measurement. Any port/pin combination can be mapped in the header files as well as a single board design supporting both common anode and common cathode displays. I will be adding photographs and detailed modification documents as time and interest permit.
@@ -22,6 +20,14 @@ In addition to the above tools, you will need one serial port with TTL outputs f
 * Display Auto-Dim with programmable limits. The auto-dim can be disabled using the limits.
 * Temperature calibration
 * Auto-increment when setting times/alarms/etc. No need to repeatedly press the same key.
+
+## Changes and new features of this fork
+* Support of yet another board from AliExpress (called BOARD_METORI in code).
+* Added year setup screen. Clock will take leap years into account.
+* "Seconds reset" option moved to "clock setup" menu.
+* Added "temperature display" screen.
+* Compile option to enable/disable menus for time/date/temperature format selection;
+* Fixed chime hours bug.
 
 The features above are implemented with a multi-level menu with best-as-can-be-managed text prompts using the limited 7 segment displays. This menu helps (IMO) with the "where-the-hell-am-I" in the rather tortured, linear menu of the original software. This does come with a cost, namely flash space so please note that the initial commit of this code requires 4.25k of memory. This should not be an issue for the Banggood clock mentioned since it arrived with an 8k chip, the STC15W408AS. If you want to use this in a similar model that has only 4K of available flash, some features will need to be removed. Since this is a work in progress, a request with at least one feature to delete should get you a branch that will need no more than 4K of flash.
 
