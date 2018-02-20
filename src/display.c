@@ -293,7 +293,7 @@ void displayFSM()
 #elif OPT_DATE_FORMAT_SELECTABLE
         stateSwitchWithS2(msFormatDate);
 #else
-        stateSwitchWithS2(msFormatTime);
+        stateSwitchWithS2(msBrightness);
 #endif
 
         break;
