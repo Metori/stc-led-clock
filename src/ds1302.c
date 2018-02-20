@@ -205,7 +205,7 @@ const uint8_t iniTable[] = {
         0x55,0x59,0xA7,                     // 07:59:55 pm
         0x12,0x31,                          // date,month
         0x01,                               // day of week
-        0x16,                               // year (unused)
+        0x18,                               // year
         0x55,0xAA,                          // checksum bytes
         kSelect_12+kSelect_MD+kSelect_FC+ \
         kAlarmOn+kChimeOn+                \
@@ -219,7 +219,7 @@ const uint8_t iniTable[] = {
         0x55,0x59,0xA7,                     // 07:59:55 pm
         0x12,0x31,                          // date,month
         0x01,                               // day of week
-        0x16,                               // year (unused)
+        0x18,                               // year
         0x55,0xAA,                          // checksum bytes
         kSelect_12+kSelect_MD+kSelect_FC,   // mode bits
         0x88,0x00,                          // 8:00am alarm
@@ -231,7 +231,7 @@ const uint8_t iniTable[] = {
         0x55,0x59,0x19,                     // 19:59:55 pm
         0x12,0x31,                          // date,month
         0x01,                               // day of week
-        0x16,                               // year (unused)
+        0x18,                               // year
         0x55,0xAA,                          // checksum bytes
         0x00,                               // mode bits
         0x08,0x00,                          // 08:00 alarm

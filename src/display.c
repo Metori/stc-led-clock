@@ -448,14 +448,26 @@ void displayFSM()
         getDateVars();
         displayHoursOn();
         displayMinutesFlash();
+        stateSwitchWithS1(msDateYear);
+        if (checkAndClearS2())
+            m = incrementDate(m,M10);
+        break;
+
+    case msDateYear:
+        dp1 = OFF;  // hold-over from date display
+        h = 0x20;
+        m = clockRam.yr;
+        displayHoursFlash();
+        displayMinutesFlash();
   #if OPT_DAY_DSP
         stateSwitchWithS1(msDay);
   #else
         stateSwitchWithS1(msExit);
   #endif
         if (checkAndClearS2())
-            m = incrementDate(m,M10);
+            m = incrementYear(m);
         break;
+
 #endif
 
 // msDay,msDayOfWeek
@@ -469,7 +481,6 @@ void displayFSM()
 
     case msDayOfWeek:
         m = clockRam.day;
-        dp1 = OFF;              // hold-over from date display
         displayHoursOff();
         displayMinutesFlash();
         stateSwitchWithS1(msExit);
@@ -1009,6 +1020,19 @@ uint8_t incrementMinutes(uint8_t min)
     __endasm;
     if ( min == 0x60 ) min = 0;
     return min;
+}
+
+uint8_t incrementYear(uint8_t year)
+{
+    __asm
+    mov     a,r7;
+    add     a,#1;
+    da      a;
+    mov     r7,a;
+    __endasm;
+    if ( year < 0x18 ) year = 0x18;
+    clockRam.yr = year;
+    return year;
 }
 
 uint8_t incrementDate(uint8_t value, uint8_t position)

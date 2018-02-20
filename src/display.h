@@ -26,7 +26,7 @@ enum stateTable {
         msAlarm,msAlarmHour,msAlarmMinute,
         msChime,msChimeStartHour,msChimeStopHour,
 #if OPT_DATE_DSP
-        msDate,msDateMonth,msDateDay,
+        msDate,msDateMonth,msDateDay,msDateYear,
 #endif
 #if OPT_DAY_DSP
         msDay,msDayOfWeek,
@@ -167,6 +167,7 @@ void setMsgOff();
 
 uint8_t incrementHours(uint8_t);
 uint8_t incrementMinutes(uint8_t);
+uint8_t incrementYear(uint8_t);
 uint8_t incrementDate(uint8_t,uint8_t);
 uint8_t incrementDay(uint8_t);
 uint8_t incrementBrightness(uint8_t);
