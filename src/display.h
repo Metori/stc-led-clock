@@ -7,6 +7,10 @@ enum stateTable {
         stClock,
         stClockSeconds,
 
+#if HAS_THERMISTOR
+        stTemp,
+#endif
+
 #if OPT_TEMP_DSP
         stOptTemp,
 #endif
@@ -22,7 +26,7 @@ enum stateTable {
         scDsp,
         scCfg,
         // set:
-        msClock,msClockHour,msClockMinute,
+        msClock,msClockHour,msClockMinute,msClockSeconds,
         msAlarm,msAlarmHour,msAlarmMinute,
         msChime,msChimeStartHour,msChimeStopHour,
 #if OPT_DATE_DSP

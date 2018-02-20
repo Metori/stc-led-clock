@@ -153,10 +153,7 @@ void displayFSM()
         // break update away from switch check for alarming...
         updateClock();
         stateSwitchWithS1(scSet);
-        if (checkAndClearS2() ){
-            userTimer100 = 200;
-            displayState = stClockSeconds;
-        }
+        stateSwitchWithS2(stClockSeconds);
         if (clockRam.sec == 0x30){
             userTimer100 = 30;
     // do not change the order of these three if statements...
@@ -185,15 +182,17 @@ void displayFSM()
         m = clockRam.sec;
         displayHoursOn();
         displayMinutesOn();
-        stateSwitchWithS1(stClock);
-        if (checkAndClearS2()){
-            clockRam.sec = 0;       // reset seconds on S2 press
-            putClock();             // save change
-            userTimer100 = 200;     // and refresh time to keep us here
-        }
-        // go back to clock on time out
-        if ( !userTimer100 ) displayState = stClock;
+        stateSwitchWithS1(stTemp);
+        checkAndClearS2();
         break;
+
+#if HAS_THERMISTOR
+    case stTemp:
+        displayTemperature();
+        stateSwitchWithS1(stClock);
+        checkAndClearS2();
+        break;
+#endif
 
 #if OPT_TEMP_DSP  
     case stOptTemp:
@@ -332,11 +331,35 @@ void displayFSM()
     case msClockMinute:
         displayHoursOn();
         displayMinutesFlash();
-        stateSwitchWithS1(msAlarm);
+        if (checkAndClearS1()){
+            if(timeChanged){
+                clockRam.sec = 0;
+                putClock();
+                timeChanged = FALSE;
+            }
+            displayState = msClockSeconds;
+        }
         if (checkAndClearS2()){
             m = incrementMinutes(m);
             clockRam.min = m;
             timeChanged = TRUE;
+        }
+        break;
+
+    case msClockSeconds:
+        dp0 = OFF;
+        dp1 = _1hzToggle;
+        dp2 = OFF;
+        dp3 = OFF;
+        getClock();
+        h = clockRam.min;
+        m = clockRam.sec;
+        displayHoursOn();
+        displayMinutesFlash();
+        stateSwitchWithS1(msAlarm);
+        if (checkAndClearS2()){
+            clockRam.sec = 0;       // reset seconds on S2 press
+            putClock();             // save change
         }
         break;
 
@@ -807,13 +830,7 @@ void displayFSM()
 
     case msExit:
         blankDisplay();                 // go blank at end of cycle
-        if (!timeChanged){
-            refreshTime();              // time didn't change so refresh get current
-        }
-        else {                          //  time before writing everything back
-            clockRam.sec = 0;           // reset seconds when changing time
-            timeChanged = FALSE;
-        }
+        refreshTime();                  // refresh get current
         putClock();                     // save changes
         putConfigRam();                 // from any set routine...
         userTimer100 = 6;               // wait for ~.5 second
