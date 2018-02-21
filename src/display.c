@@ -449,7 +449,7 @@ void displayFSM()
         dp2 = OFF;
         dp3 = OFF;
         setText2(txDate);
-  #if OPT_DAY_DSP
+  #if OPT_DAY_DSP && !OPT_DOW_AUTO
         stateSwitchWithS1(msDay);
   #else
         stateSwitchWithS1(msExit);
@@ -483,7 +483,12 @@ void displayFSM()
         displayHoursFlash();
         displayMinutesFlash();
   #if OPT_DAY_DSP
+    #if OPT_DOW_AUTO
+        clockRam.day = dateToDow(clockRam.date, clockRam.mon, clockRam.yr);
+        stateSwitchWithS1(msExit);
+    #else
         stateSwitchWithS1(msDay);
+    #endif
   #else
         stateSwitchWithS1(msExit);
   #endif
@@ -495,7 +500,7 @@ void displayFSM()
 
 // msDay,msDayOfWeek
 
-#if OPT_DAY_DSP
+#if OPT_DAY_DSP && !OPT_DOW_AUTO
     case msDay:
         setText2(txDay);
         stateSwitchWithS1(msExit);
@@ -1102,6 +1107,7 @@ uint8_t inc31(uint8_t day)
     return day;
 }
 
+#if OPT_DAY_DSP && !OPT_DOW_AUTO
 uint8_t incrementDay(uint8_t day)
 {
     __asm
@@ -1113,6 +1119,7 @@ uint8_t incrementDay(uint8_t day)
     if ( day == 0x8 ) day = 1;
     return day;
 }
+#endif
 
 uint8_t incrementBrightness(uint8_t brt)
 {

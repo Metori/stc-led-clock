@@ -15,4 +15,6 @@ uint8_t toFormat12(uint8_t);
 uint8_t toFormat24(uint8_t);
 void changeTimeFormat(__bit);
 
+uint8_t dateToDow(uint8_t day, uint8_t mon, uint8_t year);
+
 #endif

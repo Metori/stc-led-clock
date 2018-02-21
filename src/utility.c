@@ -154,3 +154,43 @@ void changeTimeFormat(__bit newFormat)
     }
 }
 
+#if OPT_DAY_DSP && OPT_DOW_AUTO
+const uint8_t daysInMon[]={
+    31, //Jan
+    28, //Feb
+    31, //Mar
+    30, //Apr
+    31, //May
+    30, //Jun
+    31, //Jul
+    31, //Aug
+    30, //Sep
+    31, //Oct
+    30, //Nov
+    31  //Dec
+};
+
+//Input values are BCD
+uint8_t dateToDow(uint8_t day, uint8_t mon, uint8_t year)
+{
+    uint8_t yearDec = bcdToDec(year);
+    uint8_t monDec = bcdToDec(mon);
+    uint8_t dayDec = bcdToDec(day);
+    uint8_t leapYears = yearDec / 4 + 1;
+    uint16_t daysInThisCentury = 365 * yearDec + leapYears;
+    uint8_t dow;
+    monDec--;
+    while (monDec-- > 0){
+        daysInThisCentury += daysInMon[monDec];
+    }
+    daysInThisCentury += dayDec;
+
+    dow = (daysInThisCentury + 4) % 7 + 1;
+#if SET_SUN_FIRST_DOW
+    if ( ++dow > 7 ) dow = 1;
+#endif
+
+    return dow;
+}
+#endif
+

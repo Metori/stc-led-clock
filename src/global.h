@@ -68,19 +68,22 @@
 #define OPT_TIME_FORMAT_SELECTABLE TRUE
 #define OPT_TEMP_UNITS_SELECTABLE  FALSE
 #define OPT_DATE_FORMAT_SELECTABLE FALSE
+#define OPT_DOW_AUTO               TRUE
 #define OPT_RUSSIAN_UI             TRUE
 
 // Set the default units for the clock
 // Use only one each of these groups of two
 
-#define SET_12HR_FORMAT FALSE
-#define SET_24HR_FORMAT TRUE
+#define SET_12HR_FORMAT   FALSE
+#define SET_24HR_FORMAT   TRUE
 
-#define SET_MMDD_FORMAT FALSE
-#define SET_DDMM_FORMAT TRUE
+#define SET_MMDD_FORMAT   FALSE
+#define SET_DDMM_FORMAT   TRUE
 
-#define SET_DEGF_FORMAT FALSE
-#define SET_DEGC_FORMAT TRUE
+#define SET_DEGF_FORMAT   FALSE
+#define SET_DEGC_FORMAT   TRUE
+
+#define SET_SUN_FIRST_DOW FALSE
 
 //---------------------------------------------------------------------------
 // End Software Option configuration

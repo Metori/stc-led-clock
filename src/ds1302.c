@@ -203,8 +203,12 @@ L090:
 const uint8_t iniTable[] = {
 #if TEST_DEFAULTS
         0x55,0x59,0xA7,                     // 07:59:55 pm
-        0x12,0x31,                          // date,month
-        0x01,                               // day of week
+        0x01,0x31,                          // month,date
+#if SET_SUN_FIRST_DOW
+        0x04,                               // 31 Jan 2018 is We
+#else
+        0x03,                               // 31 Jan 2018 is We
+#endif
         0x18,                               // year
         0x55,0xAA,                          // checksum bytes
         kSelect_12+kSelect_MD+kSelect_FC+ \
@@ -217,8 +221,12 @@ const uint8_t iniTable[] = {
         0x00                                // temp offset
 #elif SET_12HR_FORMAT
         0x55,0x59,0xA7,                     // 07:59:55 pm
-        0x12,0x31,                          // date,month
-        0x01,                               // day of week
+        0x01,0x31,                          // month,date
+#if SET_SUN_FIRST_DOW
+        0x04,                               // 31 Jan 2018 is We
+#else
+        0x03,                               // 31 Jan 2018 is We
+#endif
         0x18,                               // year
         0x55,0xAA,                          // checksum bytes
         kSelect_12+kSelect_MD+kSelect_FC,   // mode bits
@@ -229,8 +237,12 @@ const uint8_t iniTable[] = {
         0x00                                // temp offset
 #elif SET_24HR_FORMAT
         0x55,0x59,0x19,                     // 19:59:55 pm
-        0x12,0x31,                          // date,month
-        0x01,                               // day of week
+        0x01,0x31,                          // month,date
+#if SET_SUN_FIRST_DOW
+        0x04,                               // 31 Jan 2018 is We
+#else
+        0x03,                               // 31 Jan 2018 is We
+#endif
         0x18,                               // year
         0x55,0xAA,                          // checksum bytes
         0x00,                               // mode bits
