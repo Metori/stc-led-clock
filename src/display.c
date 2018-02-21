@@ -132,7 +132,7 @@ void displayFSM()
     brightLevel = mapLDR(MIN_BRIGHT);   // not max since anlog is inverted
   #endif
 
-  #if HAS_LDR
+  #if HAS_THERMISTOR
     if ( readyRead & _1hzToggle ){
         actualTemp = mapTemp(getADCResult(ADC_TEMP));
         readyRead = FALSE;
@@ -504,6 +504,7 @@ void displayFSM()
 
     case msDayOfWeek:
         m = clockRam.day;
+        dp1 = OFF;  // hold-over from date display
         displayHoursOff();
         displayMinutesFlash();
         stateSwitchWithS1(msExit);
@@ -810,6 +811,7 @@ void displayFSM()
 
     case msSetTemp:
         displayTemperature();
+        displayHoursFlash();
         stateSwitchWithS1(msExit);
         if (checkAndClearS2()){
             if (clockRam.tempOffset == 15)
