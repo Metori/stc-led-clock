@@ -170,17 +170,19 @@ const uint8_t daysInMon[]={
     31  //Dec
 };
 
-//Input values are BCD
-uint8_t dateToDow(uint8_t day, uint8_t mon, uint8_t year)
+void calcDow()
 {
-    uint8_t yearDec = bcdToDec(year);
-    uint8_t monDec = bcdToDec(mon);
-    uint8_t dayDec = bcdToDec(day);
+    uint8_t yearDec = bcdToDec(clockRam.yr);
+    uint8_t monDec = bcdToDec(clockRam.mon);
+    uint8_t dayDec = bcdToDec(clockRam.date);
     uint8_t leapYears = yearDec / 4 + 1;
     uint16_t daysInThisCentury = 365 * yearDec + leapYears;
     uint8_t dow;
+
+    if ( yearDec % 4 == 0 ) if ( monDec < 3 ) daysInThisCentury--;
+
     monDec--;
-    while (monDec-- > 0){
+    while ( monDec-- > 0 ){
         daysInThisCentury += daysInMon[monDec];
     }
     daysInThisCentury += dayDec;
@@ -190,7 +192,7 @@ uint8_t dateToDow(uint8_t day, uint8_t mon, uint8_t year)
     if ( ++dow > 7 ) dow = 1;
 #endif
 
-    return dow;
+    clockRam.day = dow;
 }
 #endif
 

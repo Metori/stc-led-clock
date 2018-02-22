@@ -484,7 +484,7 @@ void displayFSM()
         displayMinutesFlash();
   #if OPT_DAY_DSP
     #if OPT_DOW_AUTO
-        clockRam.day = dateToDow(clockRam.date, clockRam.mon, clockRam.yr);
+        calcDow();
         stateSwitchWithS1(msExit);
     #else
         stateSwitchWithS1(msDay);
