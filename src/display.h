@@ -162,7 +162,6 @@ void blankDisplay();
 void displayUpdateISR();
 void setChimeVars();
 void getDateVars();
-void putDateVars();
 void setText2(uint8_t);
 void setText2A(uint8_t);
 void setText4(uint8_t);

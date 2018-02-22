@@ -958,18 +958,6 @@ void getDateVars()
     dp1 = ON;
 }
 
-void putDateVars()
-{
-    if (Select_MD){
-        clockRam.mon = h;
-        clockRam.date = m;
-    }
-    else {
-        clockRam.date = h;
-        clockRam.mon = m;
-    }
-}
-
 void displayTemperature()
 {
     h = decToBcd(actualTemp + clockRam.tempOffset);
